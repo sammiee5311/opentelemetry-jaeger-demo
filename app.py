@@ -6,9 +6,13 @@ from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
-resource = Resource(attributes={SERVICE_NAME: "opentelemetry-jaeger-demo"})
+SERVICE_NAME = "opentelemetry-jaeger-demo"
+OPENTELEMETRY_ENDPOINT = "http://localhost:4317"
+
+resource = Resource(attributes={SERVICE_NAME: SERVICE_NAME})
 provider = TracerProvider(resource=resource)
-processor = BatchSpanProcessor(OTLPSpanExporter(endpoint="http://localhost:4317"))
+processor = BatchSpanProcessor(
+    OTLPSpanExporter(endpoint=OPENTELEMETRY_ENDPOINT))
 provider.add_span_processor(processor)
 trace.set_tracer_provider(provider)
 
